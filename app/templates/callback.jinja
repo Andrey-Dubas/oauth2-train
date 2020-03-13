@@ -1,0 +1,31 @@
+<html lang="en">
+    <head>
+        <meta cahrset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title> callback page </title>
+    </head>
+    <body>
+    </body>
+
+    <script>
+        // we can get the token from the "access_token" query
+        // param, available in the browsers "location" global
+        const query=window.location.search.substring(1)
+        const token = query.split('access_token=')[1]
+        // call the user info API using the fetch browser library
+        fetch('https://api.github.com/user', {
+            headers: {
+                // Include the token in the Authorization header
+                Authorization: 'token ' + token
+            }
+        })
+        .then( res => res.json())
+        .then( res => {
+            // Once we get the response (which  has many fields)
+            // write "welcome <user name>" th the document's body
+            const nameNode=document.cteateTextNode('Welcome, ${res.name}, \n ${res}')
+            document.body.appendChild(nameNode)
+        })
+    </script>
+</html>
